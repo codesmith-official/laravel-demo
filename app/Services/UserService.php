@@ -23,6 +23,7 @@ class UserService
                 'email' => $data['email'],
                 'phone_number' => $data['phone_number'] ?? null,
                 'password' => $data['password'],
+                'is_temp_password' => true,
                 'status' => $data['status'],
                 'email_verified_at' => now(),
             ]);

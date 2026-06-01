@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckTempPassword;
 use App\Http\Middleware\EnsurePassportUser;
 use App\Http\Middleware\RedirectIfPassportAuthenticated;
 use App\Http\Middleware\UsePassportTokenCookie;
@@ -33,6 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'passport.auth' => EnsurePassportUser::class,
             'passport.cookie' => UsePassportTokenCookie::class,
             'passport.guest' => RedirectIfPassportAuthenticated::class,
+            'temp.password' => CheckTempPassword::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

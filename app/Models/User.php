@@ -20,6 +20,7 @@ use Laravel\Passport\HasApiTokens;
     'email',
     'phone_number',
     'password',
+    'is_temp_password',
     'status',
     'profile_photo_path',
     'email_verified_at',
@@ -57,6 +58,7 @@ class User extends Authenticatable implements CanResetPasswordContract
             'email_verified_at' => 'datetime',
             'last_login_at' => 'datetime',
             'password' => 'hashed',
+            'is_temp_password' => 'boolean',
         ];
     }
 }

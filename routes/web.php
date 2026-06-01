@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\AuthController;
+use App\Http\Controllers\Web\ChangePasswordController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ForgotPasswordController;
 use App\Http\Controllers\Web\OtpVerificationController;
@@ -29,12 +30,17 @@ Route::middleware(['passport.guest'])->group(function (): void {
 
 Route::middleware(['passport.auth'])->group(function (): void {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', DashboardController::class)->name('dashboard');
-    Route::get('/users', UserPageController::class)->name('users.index');
+    Route::get('/change-password', [ChangePasswordController::class, 'show'])->name('password.change');
+    Route::post('/change-password', [ChangePasswordController::class, 'update'])->name('password.change.update');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::middleware(['temp.password'])->group(function (): void {
+        Route::get('/dashboard', DashboardController::class)->name('dashboard');
+        Route::get('/users', UserPageController::class)->name('users.index');
 
-    Route::get('/reset-password', [ResetPasswordController::class, 'showAuthenticated'])->name('profile.password.edit');
-    Route::put('/reset-password', [ResetPasswordController::class, 'resetAuthenticated'])->name('profile.password.update');
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+        Route::get('/reset-password', [ResetPasswordController::class, 'showAuthenticated'])->name('profile.password.edit');
+        Route::put('/reset-password', [ResetPasswordController::class, 'resetAuthenticated'])->name('profile.password.update');
+    });
 });
